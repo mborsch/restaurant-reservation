@@ -1,3 +1,4 @@
+const { queryBuilder, select } = require("../db/connection");
 const knex = require("../db/connection");
 const mapProperties = require("../utils/map-properties");
 
@@ -15,4 +16,11 @@ function create(reservation) {
     .insert(reservation)
     .returning("*")
     .then((createdRes) => createdRes[0]);
+}
+
+function list(date) {
+  return knex("reservations")
+    .select("*")
+    .where({ reservation_date: date })
+    .orderBy("reservation_time");
 }
