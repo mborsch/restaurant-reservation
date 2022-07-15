@@ -24,3 +24,8 @@ function list(date) {
     .where({ reservation_date: date })
     .orderBy("reservation_time");
 }
+
+module.exports = {
+  create,
+  list,
+};
