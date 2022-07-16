@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listReservations } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import DashDayButtons from "./DashDayButtons";
 
 /**
  * Defines the dashboard page.
@@ -8,7 +9,7 @@ import ErrorAlert from "../layout/ErrorAlert";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function Dashboard({ date }) {
+function Dashboard({ date, setDate }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
 
@@ -23,14 +24,34 @@ function Dashboard({ date }) {
     return () => abortController.abort();
   }
 
+  console.log(reservations);
+
   return (
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
+        <h4 className="mb-0">Reservations for date: {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
+      <DashDayButtons date={date} setDate={setDate} />
+      {/*JSON.stringify(reservations)*/}
+      <div className="d-md-flex mb-3">
+        {reservations.map((reservation) => (
+          <>
+            <h5>
+              {reservation.first_name} {reservation.last_name}
+            </h5>
+            <ul>
+              <li>Party of: {reservation.people}</li>
+              <li>
+                On: {reservation.reservation_date} at:{" "}
+                {reservation.reservation_time}
+              </li>
+              <li>Contact: {reservation.mobile_number}</li>
+            </ul>
+          </>
+        ))}
+      </div>
     </main>
   );
 }
