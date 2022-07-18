@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 import { createTable } from "../utils/api";
 
 const TableCreate = () => {
   const history = useHistory();
-  const { reservation_id } = useParams();
+  //  const { reservation_id } = useParams();
   const [table, setTable] = useState({
     table_name: "",
     capacity: "",

@@ -1,3 +1,4 @@
+import axios from "axios";
 /**
  * Defines the base URL for the API.
  * The default values is overridden by the `API_BASE_URL` environment variable.
@@ -88,4 +89,9 @@ export async function createTable(table, signal) {
     signal,
   };
   return await fetchJson(url, options);
+}
+
+export async function listTables(params, signal) {
+  const { data } = await axios.get(`${API_BASE_URL}/tables`);
+  return data.data;
 }

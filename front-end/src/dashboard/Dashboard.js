@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { listReservations } from "../utils/api";
+import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import DashDayButtons from "./DashDayButtons";
+import NoReservations from "../reservations/NoReservations";
+import ReservationList from "../reservations/ReservationList";
+
+import TableList from "../tables/TableList";
 
 /**
  * Defines the dashboard page.
@@ -12,45 +16,47 @@ import DashDayButtons from "./DashDayButtons";
 function Dashboard({ date, setDate }) {
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
+  const [tables, setTables] = useState([]);
+  const [tablesError, setTablesError] = useState(null);
 
   useEffect(loadDashboard, [date]);
 
   function loadDashboard() {
     const abortController = new AbortController();
     setReservationsError(null);
+    setTablesError(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setReservationsError);
+    listTables()
+      .then((tables) => {
+        return tables;
+      })
+      .then(setTables)
+      .catch(setTablesError);
     return () => abortController.abort();
   }
-
-  console.log(reservations);
 
   return (
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date: {date}</h4>
+        <h4 className="mb-0">Reservations for {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
-      <DashDayButtons date={date} setDate={setDate} />
+      <div className="d-md-flex mb-3">
+        <DashDayButtons date={date} setDate={setDate} />
+      </div>
       {/*JSON.stringify(reservations)*/}
       <div className="d-md-flex mb-3">
-        {reservations.map((reservation) => (
-          <>
-            <h5>
-              {reservation.first_name} {reservation.last_name}
-            </h5>
-            <ul>
-              <li>Party of: {reservation.people}</li>
-              <li>
-                On: {reservation.reservation_date} at:{" "}
-                {reservation.reservation_time}
-              </li>
-              <li>Contact: {reservation.mobile_number}</li>
-            </ul>
-          </>
-        ))}
+        {reservations.length === 0 ? (
+          <NoReservations date={date} />
+        ) : (
+          <ReservationList reservations={reservations} />
+        )}
+      </div>
+      <div className="d-md-flex mb-3">
+        {tables.length === 0 ? null : <TableList tables={tables} />}
       </div>
     </main>
   );
