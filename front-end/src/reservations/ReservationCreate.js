@@ -1,11 +1,11 @@
-import react, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import react, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { createReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
 const ReservationCreate = () => {
   const history = useHistory();
-  const { reservation_id } = useParams();
+  //  const { reservation_id } = useParams();
   const [reservation, setReservation] = useState({
     first_name: "",
     last_name: "",
@@ -207,7 +207,7 @@ const ReservationCreate = () => {
         </button>
         <button className="btn btn-primary mx-1 mb-3" type="submit">
           <span className="oi oi-circle-check mr-2" />
-          submit
+          Submit
         </button>
       </form>
     </>
