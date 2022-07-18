@@ -12,8 +12,41 @@ const VALID_PROPERTIES = [
 ];
 
 function hasOnlyValidProperties(req, res, next) {
-  const { data = {} } = req.body;
+  if (!req.body.data) {
+    return next({ status: 400, message: "Data missing" });
+  }
+  const {
+    first_name,
+    last_name,
+    mobile_number,
+    people,
+    reservation_date,
+    reservation_time,
+  } = req.body.data;
 
+  if (
+    !first_name ||
+    !last_name ||
+    !mobile_number ||
+    !people ||
+    !reservation_date ||
+    !reservation_time
+  )
+    return next({
+      status: 400,
+      message:
+        "Please complete the following: first_name, last_name, mobile_number, people, reservation_date, and reservation_time.",
+    });
+
+  if (typeof people !== "number")
+    return next({ status: 400, message: "people is not a number!" });
+
+  if (!reservation_date.match(/\d{4}-\d{2}-\d{2}/))
+    return next({
+      status: 400,
+      message: "reservation_date is invalid!",
+    });
+  /*
   const invalidFields = Object.keys(data).filter(
     (field) => !VALID_PROPERTIES.includes(field)
   );
@@ -24,6 +57,7 @@ function hasOnlyValidProperties(req, res, next) {
       message: `Invalid field(s): ${invalidFields.join(", ")}`,
     });
   }
+*/
   next();
 }
 
@@ -71,7 +105,7 @@ async function hasValidTimeAndDate(req, res, next) {
     return next({
       status: 400,
       message:
-        "The restaurant accepts reservations between 10:30 AM and 9:30 PM. Please choose another time.",
+        "reservation_time must be between 10:30 AM and 9:30 PM. Please choose another time.",
     });
   }
 
