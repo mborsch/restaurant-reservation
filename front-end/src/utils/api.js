@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useState } from "react";
+import { useHistory } from "react-router";
+
 /**
  * Defines the base URL for the API.
  * The default values is overridden by the `API_BASE_URL` environment variable.
@@ -6,7 +9,7 @@ import axios from "axios";
 import formatReservationDate from "./format-reservation-date";
 import formatReservationTime from "./format-reservation-date";
 
-const API_BASE_URL =
+export const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:5001";
 
 /**
@@ -58,17 +61,24 @@ async function fetchJson(url, options, onCancel) {
  * @returns {Promise<[reservation]>}
  *  a promise that resolves to a possibly empty array of reservation saved in the database.
  */
+/*
 
-export async function createReservation(reservation, signal) {
-  const url = `${API_BASE_URL}/reservations`;
-  const options = {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ data: reservation }),
-    signal,
-  };
-  return await fetchJson(url, options);
+export async function createReservation(reservation) {
+  const history = useHistory();
+  const [reservationsError, setReservationsError] = useState(null);
+  axios
+    .post(`${API_BASE_URL}/reservations`, { data: reservation })
+    .then((res) => {
+      res.status === 201 &&
+        history.push(
+          `/dashboard?date=${reservation.reservation_date.slice(0, 10)}`
+        );
+    })
+    .catch((err) => {
+      setReservationsError({ message: err.response.data.error });
+    });
 }
+*/
 
 export async function listReservations(params, signal) {
   const url = new URL(`${API_BASE_URL}/reservations`);

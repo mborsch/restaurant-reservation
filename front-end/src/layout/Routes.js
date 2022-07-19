@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
@@ -29,7 +29,7 @@ function Routes() {
       </Route>
 
       <Route exact={true} path="/reservations/new">
-        <ReservationCreate />
+        <ReservationCreate setDate={setDate} />
       </Route>
       <Route exact={true} path="/tables/new">
         <TableCreate />

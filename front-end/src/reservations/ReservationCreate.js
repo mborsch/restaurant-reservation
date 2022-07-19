@@ -1,9 +1,10 @@
 import react, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createReservation } from "../utils/api";
+import axios from "axios";
 import ErrorAlert from "../layout/ErrorAlert";
+import { API_BASE_URL as url } from "../utils/api";
 
-const ReservationCreate = () => {
+const ReservationCreate = ({ setDate }) => {
   const history = useHistory();
   //  const { reservation_id } = useParams();
   const [reservation, setReservation] = useState({
@@ -14,6 +15,7 @@ const ReservationCreate = () => {
     reservation_time: "",
     people: "",
   });
+  const [reservationsError, setReservationsError] = useState(null);
 
   const [error, setError] = useState(null);
   /*
@@ -22,19 +24,32 @@ const ReservationCreate = () => {
     })
     */
 
+  const createReservation = (reservation) => {
+    axios
+      .post(`${url}/reservations`, { data: reservation })
+      .then((res) => {
+        res.status === 201 &&
+          history.push(`/dashboard?date=${reservation.reservation_date}`);
+      })
+      .catch((err) => {
+        setReservationsError({ message: err.response.data.error });
+      });
+  };
+
   const submitHandler = (event) => {
     event.preventDefault();
-    createReservation(reservation)
-      .then(() => {
-        history.push("/");
-      })
-      .catch(setError);
+    setReservationsError(null);
+    reservation.people = Number(reservation.people);
+
+    createReservation(reservation);
+    setDate(reservation.reservation_date.slice(0, 10));
   };
 
   return (
     <>
       <h1>Create Reservation</h1>
-      <ErrorAlert error={error} />
+      <ErrorAlert error={reservationsError} />
+
       <form onSubmit={submitHandler}>
         {/* first and last name fields */}
         <div className="input-group mb-3">
