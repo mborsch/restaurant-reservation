@@ -48,15 +48,24 @@ function Dashboard({ date, setDate }) {
         <DashDayButtons date={date} setDate={setDate} />
       </div>
       {/*JSON.stringify(reservations)*/}
-      <div className="d-md-flex mb-3">
+      <div className="group">
         {reservations.length === 0 ? (
           <NoReservations date={date} />
         ) : (
           <ReservationList reservations={reservations} />
         )}
       </div>
-      <div className="d-md-flex mb-3">
-        {tables.length === 0 ? null : <TableList tables={tables} />}
+      <div className="group container col-9">
+        <h3>Tables:</h3>
+        <div className="group-item">
+          {tables.map((table) => (
+            <TableList
+              key={table.table_id}
+              table={table}
+              loadDashboard={loadDashboard}
+            />
+          ))}
+        </div>
       </div>
     </main>
   );
