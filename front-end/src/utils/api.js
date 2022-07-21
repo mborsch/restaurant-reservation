@@ -105,3 +105,11 @@ export async function listTables(params, signal) {
   const { data } = await axios.get(`${API_BASE_URL}/tables`);
   return data.data;
 }
+
+export async function findReservation(reservationId) {
+  const response = await axios.get(
+    `${API_BASE_URL}/reservations/${reservationId}`,
+    { data: { reservation_id: reservationId } }
+  );
+  return response.data.data;
+}
