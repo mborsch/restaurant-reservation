@@ -13,18 +13,29 @@ const ReservationList = ({ reservations }) => {
                 {reservation.first_name}
               </h5>
               <div className="d-flex justify-content-end">
-                <p className="ml-auto my-0">Party of: {reservation.people}</p>
+                <p className="ml-auto my-0">Party of: {reservation.people} </p>
+              </div>
+              <div
+                className="my-0 ml-1 justify-content-end"
+                data-reservation-id-status={reservation.reservation_id}
+              >
+                {"  "}Status:{" "}
+                <span className={`badge badge-pill badge-info`}>
+                  {reservation.status}
+                </span>
               </div>
             </div>
-            <div className="d-inline-block ml-auto justify-content-end mr-3">
-              <Link
-                className="btn btn-dark mr-6 my-2 pl-2 mx-2"
-                to={`/reservations/${reservation.reservation_id}/seat`}
-              >
-                <span className="oi oi-people mr-2" />
-                Seat
-              </Link>
 
+            <div className="d-inline-block ml-auto justify-content-end mr-3">
+              {reservation.status === "seated" ? null : (
+                <Link
+                  className="btn btn-dark mr-6 my-2 pl-2 mx-2"
+                  to={`/reservations/${reservation.reservation_id}/seat`}
+                >
+                  <span className="oi oi-people mr-2" />
+                  Seat
+                </Link>
+              )}
               <button className="btn btn-danger d-lcok d-md-inline mx-2">
                 Cancel
               </button>
