@@ -2,6 +2,10 @@ const { queryBuilder, select } = require("../db/connection");
 const knex = require("../db/connection");
 const mapProperties = require("../utils/map-properties");
 
+function read(reservation_id) {
+  return knex("reservations").select("*").where({ reservation_id }).first();
+}
+
 const addReservation = mapProperties({
   first_name: "reservation.first_name",
   last_name: "reservation.last_name",
@@ -25,7 +29,16 @@ function list(date) {
     .orderBy("reservation_time");
 }
 
+function update(reservationId, updatedStatus) {
+  return knex("reservations")
+    .select("*")
+    .where({ reservation_id: reservationId })
+    .update(updatedStatus, "*");
+}
+
 module.exports = {
   create,
   list,
+  read,
+  update,
 };
