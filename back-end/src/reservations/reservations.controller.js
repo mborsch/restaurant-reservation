@@ -105,8 +105,13 @@ async function read(req, res, next) {
 }
 
 async function list(req, res) {
-  const { date } = req.query;
-  let data = await service.list(date);
+  const { date, mobile_number } = req.query;
+  let data = null;
+
+  !date
+    ? (data = await service.search(mobile_number))
+    : await service.list(date);
+
   data = data.filter((each) => {
     return each.status !== "finished";
   });
