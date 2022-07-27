@@ -110,11 +110,12 @@ async function list(req, res) {
 
   !date
     ? (data = await service.search(mobile_number))
-    : await service.list(date);
+    : (data = await service.list(date));
 
   data = data.filter((each) => {
     return each.status !== "finished";
   });
+
   console.log(date);
   console.log(data);
   res.json({ data: data });
