@@ -2,22 +2,26 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 import { createTable } from "../utils/api";
+import axios from "axios";
+import { API_BASE_URL as url } from "../utils/api";
 
 const TableCreate = () => {
   const history = useHistory();
   //  const { reservation_id } = useParams();
-  const [table, setTable] = useState({
-    table_name: "",
-    capacity: "",
-  });
+  const [tableName, setTableName] = useState("");
+  const [capacity, setCapacity] = useState("");
 
   const [error, setError] = useState(null);
 
   const submitHandler = (event) => {
     event.preventDefault();
-    createTable(table)
-      .then(() => {
-        history.push("/");
+    const newTable = {
+      table_name: tableName,
+      capacity: Number(capacity),
+    };
+    createTable(newTable)
+      .then((res) => {
+        history.push("/dashboard");
       })
       .catch(setError);
   };
@@ -45,12 +49,9 @@ const TableCreate = () => {
             type="text"
             name="table_name"
             onChange={(e) => {
-              setTable((cur) => ({
-                ...cur,
-                table_name: e.target.value,
-              }));
+              setTableName(e.target.value);
             }}
-            value={table.table_name}
+            value={tableName}
             maxLength="50"
             minLength="2"
             required
@@ -66,12 +67,9 @@ const TableCreate = () => {
             type="number"
             name="capacity"
             onChange={(e) => {
-              setTable((cur) => ({
-                ...cur,
-                capacity: e.target.value,
-              }));
+              setCapacity(e.target.value);
             }}
-            value={table.capacity}
+            value={capacity}
             min="1"
             required
           />
