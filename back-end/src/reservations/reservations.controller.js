@@ -121,6 +121,17 @@ async function list(req, res) {
   res.json({ data: data });
 }
 
+async function update(req, res) {
+  const { reservation } = res.locals;
+
+  const updatedReservation = { ...reservation, ...req.body.data };
+  const { reservation_id } = reservation;
+
+  const data = await service.update(reservation_id, updatedReservation);
+
+  res.json({ data: data[0] });
+}
+
 async function create(req, res, next) {
   const data = await service.create(req.body.data);
 
@@ -161,6 +172,12 @@ module.exports = {
     hasValidTimeAndDate,
     asyncErrorBoundary(checkStatus),
     asyncErrorBoundary(create),
+  ],
+  update: [
+    asyncErrorBoundary(reservationExists),
+    hasOnlyValidProperties,
+    hasValidTimeAndDate,
+    asyncErrorBoundary(update),
   ],
   updateStatus: [
     asyncErrorBoundary(reservationExists),
