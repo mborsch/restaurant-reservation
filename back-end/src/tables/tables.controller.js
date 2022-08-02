@@ -54,10 +54,15 @@ function capacityValidator(req, res, next) {
 }
 
 function CapacityNaN(req, res, next) {
-  const { capacity } = req.body.data;
-  capacity === Number(capacity)
-    ? next()
-    : next({ status: 400, message: `capacity must be a number.` });
+  let { capacity } = req.body.data;
+
+  if (capacity > 0 && Number.isInteger(capacity)) {
+    return next();
+  }
+  return next({
+    status: 400,
+    message: `Invalid capacity field. Capacity must be a positive integer greater than 0`,
+  });
 }
 
 async function tableExists(request, response, next) {
