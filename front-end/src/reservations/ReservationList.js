@@ -1,7 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
+import { API_BASE_URL as url } from "../utils/api";
 
 const ReservationList = ({ reservations }) => {
+  const history = useHistory();
+
   return (
     <div className="container col-lg-9">
       <div className="d-flex flex-column w-500 justify-content-center">
@@ -27,18 +31,45 @@ const ReservationList = ({ reservations }) => {
             </div>
 
             <div className="d-inline-block ml-auto justify-content-end mr-3">
-              {reservation.status === "seated" ? null : (
-                <Link
-                  className="btn btn-dark mr-6 my-2 pl-2 mx-2"
-                  to={`/reservations/${reservation.reservation_id}/seat`}
-                >
-                  <span className="oi oi-people mr-2" />
-                  Seat
-                </Link>
-              )}
-              <button className="btn btn-danger d-lcok d-md-inline mx-2">
-                Cancel
-              </button>
+              {reservation.status === "booked" ? (
+                <div>
+                  <Link
+                    className="btn btn-dark mr-6 my-2 pl-2 mx-2"
+                    to={`/reservations/${reservation.reservation_id}/seat`}
+                  >
+                    <span className="oi oi-people mr-2" />
+                    Seat
+                  </Link>
+                  <Link
+                    className="btn btn-dark mr-6 my-2 pl-2 mx-2 d-md-inline"
+                    to={`/reservations/${reservation.reservation_id}/edit`}
+                  >
+                    <span className="oi oi-pencil mr-2" />
+                    Edit
+                  </Link>
+                  <button
+                    className="btn btn-danger d-block my-2  d-md-inline mx-2"
+                    data-reservation-id-cancel={reservation.reservation_id}
+                    onClick={() => {
+                      window.confirm(
+                        "Do you want to cancel this reservation? This cannot be undone."
+                      ) &&
+                        axios
+                          .put(
+                            `${url}/reservations/${reservation.reservation_id}/status`,
+                            {
+                              data: { status: "cancelled" },
+                            }
+                          )
+                          .then((res) => {
+                            res.status === 200 && history.push("/");
+                          });
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : null}
             </div>
             {/*  <p>Contact: {reservation.mobile_number}</p> */}
           </div>

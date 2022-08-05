@@ -116,8 +116,6 @@ async function list(req, res) {
     return each.status !== "finished";
   });
 
-  console.log(date);
-  console.log(data);
   res.json({ data: data });
 }
 

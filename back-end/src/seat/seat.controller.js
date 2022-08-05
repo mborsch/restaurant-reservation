@@ -32,14 +32,12 @@ async function seatExists(request, response, next) {
   }
 
   const reservations = await service.listRes();
-  console.log("RESERVATIONS:", reservations);
 
   // Assign the reservation_id and then check if it is a valid reservation
 
   const reservationFinder = reservations.filter(
     (res) => res.reservation_id === reservationId
   );
-  console.log("HOLY FUCK DID I FIND ANYTHING WORTHWHILE:", reservationFinder);
 
   reservation_id = reservationId;
 

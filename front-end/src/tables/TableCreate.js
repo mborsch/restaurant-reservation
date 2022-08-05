@@ -7,7 +7,7 @@ import { API_BASE_URL as url } from "../utils/api";
 
 const TableCreate = () => {
   const history = useHistory();
-  //  const { reservation_id } = useParams();
+
   const [tableName, setTableName] = useState("");
   const [capacity, setCapacity] = useState("");
 

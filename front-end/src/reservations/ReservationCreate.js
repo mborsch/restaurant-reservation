@@ -1,12 +1,14 @@
-import react, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import react, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import ErrorAlert from "../layout/ErrorAlert";
-import { API_BASE_URL as url } from "../utils/api";
+import { API_BASE_URL as url, findReservation } from "../utils/api";
+
+//Form for creating or editing a reservation.
 
 const ReservationCreate = ({ setDate }) => {
   const history = useHistory();
-  //  const { reservation_id } = useParams();
+  const { reservation_id } = useParams();
   const [reservation, setReservation] = useState({
     first_name: "",
     last_name: "",
@@ -18,11 +20,19 @@ const ReservationCreate = ({ setDate }) => {
   const [reservationsError, setReservationsError] = useState(null);
 
   const [error, setError] = useState(null);
-  /*
-    useEffect(() => {
 
-    })
-    */
+  useEffect(() => {
+    const abortController = new AbortController();
+    reservation_id && findReservation(reservation_id).then(setReservation);
+    return () => abortController.abort();
+  }, []);
+
+  const { first_name, last_name, mobile_number, reservation_time } =
+    reservation;
+
+  let { reservation_date, people } = reservation;
+
+  reservation.reservation_date = reservation.reservation_date.slice(0, 10);
 
   const createReservation = (reservation) => {
     axios
@@ -36,18 +46,37 @@ const ReservationCreate = ({ setDate }) => {
       });
   };
 
+  const updatedReservation = async (reservation) => {
+    axios
+      .put(`${url}/reservations/${reservation.reservation_id}`, {
+        data: reservation,
+      })
+      .then((res) => {
+        res.status === 200 &&
+          history.push(`/dashboard?date=${reservation.reservation_date}`);
+      })
+      .catch((err) => {
+        setReservationsError({ message: err.response.data.error });
+      });
+  };
+
   const submitHandler = (event) => {
     event.preventDefault();
     setReservationsError(null);
     reservation.people = Number(reservation.people);
 
-    createReservation(reservation);
+    if (!reservation.reservation_id) {
+      createReservation(reservation);
+    } else {
+      updatedReservation(reservation);
+    }
+
     setDate(reservation.reservation_date.slice(0, 10));
   };
 
   return (
     <>
-      <h1>Create Reservation</h1>
+      <h1>{reservation.reservation_id ? "Edit" : "Create"} Reservation</h1>
       <ErrorAlert error={reservationsError} />
 
       <form onSubmit={submitHandler}>
@@ -100,6 +129,7 @@ const ReservationCreate = ({ setDate }) => {
             required
           />
         </div>
+
         {/* mobile number field */}
         <div className="input-group mb-3">
           <div className="input-group-prepend">
@@ -128,6 +158,7 @@ const ReservationCreate = ({ setDate }) => {
             required
           />
         </div>
+
         {/* reservation date */}
         <div className="input-group mb-3">
           <div className="input-group-prepend">
@@ -155,6 +186,7 @@ const ReservationCreate = ({ setDate }) => {
             required
           />
         </div>
+
         {/* Reservation Time */}
         <div className="input-group mb-3">
           <div className="input-group-prepend">
@@ -182,6 +214,7 @@ const ReservationCreate = ({ setDate }) => {
             required
           />
         </div>
+
         {/* people */}
         <div className="input-group mb-3">
           <div className="input-group-prepend">
@@ -210,8 +243,8 @@ const ReservationCreate = ({ setDate }) => {
             required
           />
         </div>
-        {/* cancel and submit buttons */}
 
+        {/* cancel and submit buttons */}
         <button
           className="btn btn-secondary mr-1 mb-3"
           to="/"
