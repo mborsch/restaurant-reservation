@@ -11,7 +11,7 @@ import formatReservationTime from "./format-reservation-date";
 
 export const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL ||
-  "https://res-reserve-back-end.herokuapp.com/";
+  "https://res-reserve-back-end.herokuapp.com";
 
 /**
  * Defines the default headers for these functions to work with `json-server`
