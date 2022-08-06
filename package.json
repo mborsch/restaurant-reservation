@@ -49,6 +49,7 @@
   "author": "Thinkful, Inc.",
   "license": "UNLICENSED",
   "dependencies": {
+    "axios": "^0.27.2",
     "knex": "^2.1.0"
   }
 }
