@@ -154,7 +154,9 @@ Although the user stories do not say anything about deployment, you should consi
 
 ### US-01 Create and list reservations
 
-![createRes](https://user-images.githubusercontent.com/99302602/183271021-09dc5b9f-08e5-4443-b2a9-17495da7517c.PNG)
+![CreateReservation](https://user-images.githubusercontent.com/99302602/183271079-32f502cc-905f-44c2-9578-53aa9475ff91.PNG)
+
+![ReservationList](https://user-images.githubusercontent.com/99302602/183271086-71243727-8b04-45fd-aa12-fd0da4f90b8c.PNG)
 
 
 As a restaurant manager<br/>
