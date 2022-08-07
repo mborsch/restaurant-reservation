@@ -231,6 +231,9 @@ As a restaurant manager<br/>
 I only want to allow reservations to be created on a day when we are open<br/>
 so that users do not accidentally create a reservation for days when we are closed.<br/>
 
+![MustBeFuture](https://user-images.githubusercontent.com/99302602/183271122-53afa055-c961-4add-9051-214ceaad1bd5.PNG)
+
+
 #### Acceptance criteria
 
 1. The `/reservations/new` page will display an error message with `className="alert alert-danger"` if any of the following constraints are violated:
@@ -255,6 +258,9 @@ As a restaurant manager<br/>
 I only want to allow reservations to be created during business hours, up to 60 minutes before closing<br/>
 so that users do not accidentally create a reservation for a time we cannot accommodate.
 
+![CorrectHours](https://user-images.githubusercontent.com/99302602/183271137-c42d4dc8-1b81-4367-b531-d463b5599540.PNG)
+
+
 #### Acceptance criteria
 
 1. The `/reservations/new` page will display an error message with `className="alert alert-danger"`, if any of the following additional constraints are violated:
@@ -271,6 +277,8 @@ As a restaurant manager, <br/>
 When a customer with an existing reservation arrives at the restaurant<br/>
 I want to seat (assign) their reservation to a specific table<br/>
 so that I know which tables are occupied and free.
+
+![SeatedRes](https://user-images.githubusercontent.com/99302602/183271180-a279256f-0066-432e-abb4-e338c8ad4fd2.PNG)
 
 #### Acceptance Criteria
 
@@ -317,6 +325,9 @@ As a restaurant manager<br/>
 I want to free up an occupied table when the guests leave<br/>
 so that I can seat new guests at that table.<br/>
 
+![FinishSeating](https://user-images.githubusercontent.com/99302602/183271209-edec60a0-007a-4da4-9dab-5161bd73e0f6.PNG)
+
+
 #### Acceptance Criteria
 
 1. The `/dashboard` page will
@@ -332,6 +343,9 @@ so that I can seat new guests at that table.<br/>
 As a restaurant manager<br/>
 I want a reservation to have a status of either booked, seated, or finished<br/>
 so that I can see which reservation parties are seated, and finished reservations are hidden from the dashboard.
+
+![StatusShown](https://user-images.githubusercontent.com/99302602/183271226-9514d7b1-d9b7-4b1e-90ba-5eaa9a6005ef.PNG)
+
 
 #### Acceptance Criteria
 
@@ -352,6 +366,9 @@ so that I can see which reservation parties are seated, and finished reservation
 As a restaurant manager<br/>
 I want to search for a reservation by phone number (partial or complete)<br/>
 so that I can quickly access a customer's reservation when they call about their reservation.<br/>
+
+![PhoneSearch](https://user-images.githubusercontent.com/99302602/183271235-cb5f04b3-b7ad-42b9-b0ba-4c0a213c01e1.PNG)
+
 
 #### Acceptance Criteria
 
@@ -384,6 +401,9 @@ so that I can quickly access a customer's reservation when they call about their
 As a restaurant manager<br/>
 I want to be able to modify a reservation if a customer calls to change or cancel their reservation<br/>
 so that reservations are accurate and current.
+
+![EditRes](https://user-images.githubusercontent.com/99302602/183271257-f06225ca-2a1b-4ecc-bd06-30868512dc7f.PNG)
+
 
 #### Acceptance Criteria
 
