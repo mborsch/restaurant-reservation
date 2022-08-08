@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
-import ReservationCreate from "../reservations/ReservationCreate";
+import ReservationForm from "../reservations/ReservationForm";
 import TableCreate from "../tables/TableCreate";
 import SeatForm from "../seat/SeatForm";
 import useQuery from "../utils/useQuery";
@@ -40,7 +40,7 @@ function Routes() {
         exact={true}
         path={["/reservations/new", "/reservations/:reservation_id/edit"]}
       >
-        <ReservationCreate setDate={setDate} />
+        <ReservationForm setDate={setDate} />
       </Route>
       <Route exact={true} path="/tables/new">
         <TableCreate />

@@ -6,7 +6,7 @@ import { API_BASE_URL as url, findReservation } from "../utils/api";
 
 //Form for creating or editing a reservation.
 
-const ReservationCreate = ({ setDate }) => {
+const ReservationForm = ({ setDate }) => {
   const history = useHistory();
   const { reservation_id } = useParams();
   const [reservation, setReservation] = useState({
@@ -262,4 +262,4 @@ const ReservationCreate = ({ setDate }) => {
   );
 };
 
-export default ReservationCreate;
+export default ReservationForm;
