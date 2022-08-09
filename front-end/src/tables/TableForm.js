@@ -5,7 +5,7 @@ import { createTable } from "../utils/api";
 import axios from "axios";
 import { API_BASE_URL as url } from "../utils/api";
 
-const TableCreate = () => {
+const TableForm = () => {
   const history = useHistory();
 
   const [tableName, setTableName] = useState("");
@@ -93,4 +93,4 @@ const TableCreate = () => {
   );
 };
 
-export default TableCreate;
+export default TableForm;

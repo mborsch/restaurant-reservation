@@ -5,7 +5,7 @@ import Dashboard from "../dashboard/Dashboard";
 import NotFound from "./NotFound";
 import { today } from "../utils/date-time";
 import ReservationForm from "../reservations/ReservationForm";
-import TableCreate from "../tables/TableCreate";
+import TableForm from "../tables/TableForm";
 import SeatForm from "../seat/SeatForm";
 import useQuery from "../utils/useQuery";
 import Search from "../search/Search";
@@ -43,7 +43,7 @@ function Routes() {
         <ReservationForm setDate={setDate} />
       </Route>
       <Route exact={true} path="/tables/new">
-        <TableCreate />
+        <TableForm />
       </Route>
       <Route path="/dashboard">
         <Dashboard date={date} setDate={setDate} />
