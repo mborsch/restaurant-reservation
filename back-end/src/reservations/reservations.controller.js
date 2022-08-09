@@ -132,23 +132,9 @@ async function update(req, res) {
 
 async function create(req, res, next) {
   const data = await service.create(req.body.data);
+  //need to fix time and date
+
   console.log(data);
-  let revisedData = {};
-
-  for (const property in data) {
-    if (property === "created_at") {
-      delete data.created_at;
-    }
-    if (property === "updated_at") {
-      delete data.updated_at;
-    } else {
-      revisedData[property] = data[property];
-    }
-  }
-
-  console.log("data after delete:", data);
-
-  console.log("REVISED?", revisedData);
 
   res.status(201).json({ data });
 }
