@@ -6,15 +6,6 @@ function read(reservation_id) {
   return knex("reservations").select("*").where({ reservation_id }).first();
 }
 
-const addReservation = mapProperties({
-  first_name: "reservation.first_name",
-  last_name: "reservation.last_name",
-  mobile_number: "reservation.mobile_number",
-  reservation_date: "reservation.reservation_date",
-  reservation_time: "reservation.reservation_time",
-  people: "reservation.people",
-});
-
 function create(reservation) {
   return knex("reservations")
     .insert(reservation)
