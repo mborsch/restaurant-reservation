@@ -175,6 +175,8 @@ const ReservationForm = ({ setDate }) => {
             aria-label="Reservation Date"
             id="reservation_date"
             type="date"
+            placeholder="YYYY-MM-DD"
+            pattern="\d{4}-\d{2}-\d{2}"
             name="reservation_date"
             onChange={(e) => {
               setReservation((cur) => ({
@@ -203,6 +205,8 @@ const ReservationForm = ({ setDate }) => {
             aria-label="Reservation Time"
             id="reservation_time"
             type="time"
+            placeholder="HH:MM"
+            pattern="[0-9]{2}:[0-9]{2}"
             name="reservation_time"
             onChange={(e) => {
               setReservation((cur) => ({
