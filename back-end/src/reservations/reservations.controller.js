@@ -170,7 +170,7 @@ module.exports = {
   read: [asyncErrorBoundary(reservationExists), asyncErrorBoundary(read)],
   create: [
     hasOnlyValidProperties,
-    hasValidTimeAndDate,
+    asyncErrorBoundary(hasValidTimeAndDate),
     asyncErrorBoundary(checkStatus),
     asyncErrorBoundary(create),
   ],
